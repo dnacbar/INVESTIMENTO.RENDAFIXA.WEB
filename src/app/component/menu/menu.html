@@ -10,10 +10,7 @@
                 </li>
                 <!-- Adicione outros itens de menu aqui -->
             </ul>
-            <input [(ngModel)]="selectedInvestidor" [typeahead]="investidores" class="form-control">
-            <div class="enter-container" animate.enter="enter-animation">
-                <p>The box is entering.</p>
-            </div>
+            <input [(ngModel)]="selectedInvestidor" [typeahead]="investidores" [isAnimated]="true" class="form-control">
         </div>
     </div>
 </nav>
