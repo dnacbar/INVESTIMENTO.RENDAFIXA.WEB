@@ -9,7 +9,7 @@ import { Investimento } from '../model/investimento';
 @Injectable({
   providedIn: 'root'
 })
-export class InvestimentoService {
+export class ConsultaInvestimento {
   private httpClient = inject(HttpClient);
 
   public listaInvestimentoQueNaoEstaLiquidado(signature: ListaInvestimentoQueNaoEstaLiquidadoSignature): Observable<Investimento[]> {

@@ -1,1 +1,40 @@
-<p>lista works!</p>
+<table id="myTable" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Documento Federal</th>
+            <th>Valor Inicial</th>
+            <th>Valor Final</th>
+            <th>Imposto</th>
+            <th>Taxa Rendimento</th>
+            <th>Taxa Adicional</th>
+            <th>Data Inicial</th>
+            <th>Data Final</th>
+            <th>Liquidado</th>
+            <th>Isento Imposto</th>
+            <th>Indexador</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (investimento of listaDeInvestimento; track $index) {
+        <tr>
+            <td>{{ investimento.txDocumentoFederal }}</td>
+            <td>{{ investimento.nmValorInicial | currency:'BRL' }}</td>
+            <td>{{ investimento.nmValorFinal | currency:'BRL' }}</td>
+            <td>{{ investimento.nmValorImposto | currency:'BRL' }}</td>
+            <td>{{ investimento.nmTaxaRendimento }}%</td>
+            <td>{{ investimento.nmTaxaAdicional }}%</td>
+            <td>{{ investimento.dtInicial | date:'dd/MM/yyyy' }}</td>
+            <td>{{ investimento.dtFinal | date:'dd/MM/yyyy' }}</td>
+            <td>{{ investimento.exibeLiquidado() }}</td>
+            <td>{{ investimento.exibeIsentoImposto() }}</td>
+            <td>{{ investimento.exibeIndexador() }}</td>
+            <td>
+                <button class="btn btn-primary btn-sm" (click)="visualizaInvestimento(investimento)">
+                    Visualizar
+                </button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
