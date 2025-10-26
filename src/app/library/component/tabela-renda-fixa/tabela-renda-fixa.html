@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <div>
+        <label class="form-label me-2">Exibir:</label>
+        <select class="form-select d-inline-block w-auto" [(ngModel)]="quantidadePorPagina"
+            (change)="aoMudarQuantidade(quantidadePorPagina())">
+            @for (item of [10, 20, 30]; track $index) {
+            <option [value]="item">{{item}}</option>
+            }
+        </select>
+        <span class="ms-2">registros por página</span>
+    </div>
+    <div>
+        <ng-content select="[tabela-header-extra]"></ng-content>
+    </div>
+</div>
+
+<table [class]="cssTabela">
+    <thead>
+        <tr>
+            @for (item of listaDeColuna; track $index) {
+            <th>{{ item.titulo }}</th>
+            }
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (dadosPaginados.length === 0) {
+        <tr>
+            <td [attr.colspan]="listaDeColuna.length + 1" class="text-center">Nenhum registro encontrado.</td>
+        </tr>
+        }
+        @else {
+        @for(item of dadosPaginados; track $index) {
+        <tr>
+            @for (col of listaDeColuna; track $index) {
+            <td>{{ obtemValor(item, col.campo, col.pipe) }}</td>
+            }
+            <td>
+                <button class="btn btn-outline-primary btn-sm me-1" (click)="eventoVisualiza.emit(item)"
+                    title="Visualizar">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </td>
+        </tr>
+        }
+        }
+    </tbody>
+</table>
+
+@if (totalPaginas > 1) {
+<nav aria-label="Paginação" class="mt-2">
+    <ul class="pagination justify-content-center mb-0">
+        <li class="page-item" [class.disabled]="paginaAtual() === 1">
+            <button class="page-link" (click)="irParaPrimeira()" title="Primeira"><i
+                    class="bi bi-chevron-double-left"></i></button>
+        </li>
+        <li class="page-item" [class.disabled]="paginaAtual() === 1">
+            <button class="page-link" (click)="irParaAnterior()" title="Anterior"><i
+                    class="bi bi-chevron-left"></i></button>
+        </li>
+        <li class="page-item" *ngFor="let p of paginas" [class.active]="p === paginaAtual()">
+            <button class="page-link" (click)="irParaPagina(p)">{{p}}</button>
+        </li>
+        <li class="page-item" [class.disabled]="paginaAtual() === totalPaginas">
+            <button class="page-link" (click)="irParaProxima()" title="Próxima"><i
+                    class="bi bi-chevron-right"></i></button>
+        </li>
+        <li class="page-item" [class.disabled]="paginaAtual() === totalPaginas">
+            <button class="page-link" (click)="irParaUltima()" title="Última"><i
+                    class="bi bi-chevron-double-right"></i></button>
+        </li>
+    </ul>
+</nav>
+}

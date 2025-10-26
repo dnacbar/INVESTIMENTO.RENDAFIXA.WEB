@@ -1,0 +1,14 @@
+<div class="grafico-total-investido">
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [labels]="chartOptions.labels"
+    [responsive]="chartOptions.responsive"
+    [title]="chartOptions.title">
+  </apx-chart>
+  <div class="valores">
+    <p><b>Valor Inicial:</b> {{ totalInvestimento().valorTotalInicialInvestido | currency:'BRL' }}</p>
+    <p><b>Valor Final:</b> {{ totalInvestimento().valorTotalFinalInvestido | currency:'BRL' }}</p>
+    <p><b>Imposto:</b> {{ totalInvestimento().valorTotalDeImposto | currency:'BRL' }}</p>
+  </div>
+</div>

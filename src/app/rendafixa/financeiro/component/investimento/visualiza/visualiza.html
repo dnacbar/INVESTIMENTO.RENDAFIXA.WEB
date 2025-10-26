@@ -1,0 +1,17 @@
+<app-cartao-renda-fixa [listaDePropriedade]="[
+  {titulo:'Investimento', propriedade:'idInvestimento', pipe:null},
+  {titulo:'Documento Federal', propriedade:'txDocumentoFederal', pipe:ngxMaskPipe},
+  {titulo:'Valor Inicial', propriedade:'nmValorInicial', pipe:currencyPipe},
+  {titulo:'Valor Final', propriedade:'nmValorFinal', pipe:currencyPipe},
+  {titulo:'Valor Bloqueado Total', propriedade:'nmValorBloqueadoTotal', pipe:currencyPipe},
+  {titulo:'Valor Imposto', propriedade:'nmValorImposto', pipe:currencyPipe},
+  {titulo:'Taxa Rendimento', propriedade:'nmTaxaRendimento', pipe:percentPipe},
+  {titulo:'Taxa Adicional', propriedade:'nmTaxaAdicional', pipe:percentPipe},
+  {titulo:'Data Inicial', propriedade:'dtInicial', pipe:datePipe},
+  {titulo:'Data Final', propriedade:'dtFinal', pipe:datePipe},
+  {titulo:'Dias Carência', propriedade:'nmDiasCarencia', pipe:null},
+  {titulo:'Isento Imposto', propriedade:exibeIsentoImposto, pipe:null},
+  {titulo:'Liquidez Diária', propriedade:exibeLiquidezDiaria, pipe:null},
+  {titulo:'Indexador', propriedade:exibeIndexador, pipe:null},
+  {titulo:'Liquidado', propriedade:exibeLiquidado, pipe:null},
+]" [dado]="investimentoSignal()" [tituloCartao]="'investimento'"></app-cartao-renda-fixa>

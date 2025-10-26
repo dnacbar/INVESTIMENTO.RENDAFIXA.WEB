@@ -1,13 +1,11 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Menu } from "./investidor/component/menu/menu";
-import { InvestidorDataBinding } from './investidor/service/investidor-data-binding';
-import { Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { MenuPrincipal } from './rendafixa/menu/component/menu';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterModule, Menu],
+  imports: [CommonModule, RouterModule, MenuPrincipal],
   templateUrl: './app.html',
 })
 export class App {

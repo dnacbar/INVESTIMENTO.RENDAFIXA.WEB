@@ -1,0 +1,14 @@
+<div class="card mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Detalhes do {{tituloCartao}}</h5>
+        <button class="btn btn-outline-success" (click)="voltaIndex()">Volta</button>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            @for (item of listaDePropriedade; track $index) {
+            <dt class="col-6">{{item.titulo}}</dt>
+            <dd class="col-6">{{ obtemValor(dado, item.propriedade, item.pipe) }}</dd>
+            }
+        </dl>
+    </div>
+</div>

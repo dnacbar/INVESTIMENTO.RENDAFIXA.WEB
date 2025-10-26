@@ -1,0 +1,19 @@
+<section>
+    @if (menuInvestidorModel().boCarregandoInvestidor) {
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    }
+    @else{
+    <div class="d-flex gap-2">
+        <label for="cmbInvestidor" class="form-label align-self-center">Investidor:</label>
+        <select id="cmbInvestidor" class="form-select form-select-sm" [(ngModel)]="menuInvestidorModel().idInvestidorSelecionado"
+            (change)="investidorSelecionado()" [disabled]="!menuInvestidorModel().boHabilitaSelecaoInvestidor">
+            <option value="" selected>Selecione o investidor</option>
+            @for (item of listaDeInvestidor(); track $index) {
+            <option [value]="item.idInvestidor">{{ item.documentoFederal }}</option>
+            }
+        </select>
+    </div>
+    }
+</section>

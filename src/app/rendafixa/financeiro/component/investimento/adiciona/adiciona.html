@@ -1,0 +1,125 @@
+@if (investimentoModel().boCarregandoInvestimento) {
+<div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>
+}
+@else{
+<div class="row gx-4 gy-2 mb-3">
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <label class="form-label">Investidor</label>
+    <input [(ngModel)]="investimentoModel().idInvestidor" required class="form-control" #investidor="ngModel"
+      [ngClass]="{'is-invalid': investidor.invalid && investidor.touched}" />
+    @if(investidor.invalid && investidor.touched){
+    <div class="invalid-feedback">Investidor é obrigatório.</div>
+    }
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <label class="form-label">Documento Federal</label>
+    <input [(ngModel)]="investimentoModel().txDocumentoFederal" class="form-control" mask="CPF_CNPJ"
+      [dropSpecialCharacters]="true" [ngClass]="{'is-invalid': docFederal.invalid && docFederal.touched}"
+      #docFederal="ngModel" />
+    @if(docFederal.invalid && docFederal.touched){
+    <div class="invalid-feedback">CPF ou CNPJ é obrigatório e válido.</div>
+    }
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <label class="form-label">Valor Investimento</label>
+    <input type="number" [(ngModel)]="investimentoModel().nmValorInicial" required class="form-control"
+      #valorInvestimento="ngModel" [min]="1" [ngClass]="{'is-invalid': valorInvestimento.invalid && valorInvestimento.touched}" />
+    @if(valorInvestimento.invalid && valorInvestimento.touched){
+    <div class="invalid-feedback">Valor investimento é obrigatório.</div>
+    }
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <label class="form-label">Taxa Rendimento</label>
+    <input type="number" [(ngModel)]="investimentoModel().nmTaxaRendimento" required class="form-control"
+      #taxaRendimento="ngModel" [min]="1"
+      [ngClass]="{'is-invalid': taxaRendimento.invalid && taxaRendimento.touched}" />
+    @if(taxaRendimento.invalid && taxaRendimento.touched){
+    <div class="invalid-feedback">Taxa de rendimento é obrigatória.</div>
+    }
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <label class="form-label">Taxa Adicional</label>
+    <input type="number" [(ngModel)]="investimentoModel().nmTaxaAdicional" required class="form-control"
+      #taxaAdicional="ngModel" [min]="0" [max]="100"
+      [ngClass]="{'is-invalid': taxaAdicional.invalid && taxaAdicional.touched}" />
+    @if(taxaAdicional.invalid && taxaAdicional.touched){
+    <div class="invalid-feedback">Taxa adicional é obrigatória.</div>
+    }
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <label class="form-label">Data Inicial</label>
+    <input type="date" [(ngModel)]="investimentoModel().dtInicial" required class="form-control" #dataInicial="ngModel"
+      [ngClass]="{'is-invalid': (!investimentoModel().verificaSeDataInicialEhMaiorOuIgualQueDataAtual() && dataInicial.touched) || 
+      (dataInicial.invalid && dataInicial.touched)}" />
+    @if(dataInicial.invalid && dataInicial.touched){
+    <div class="invalid-feedback">Data inicial é obrigatória.</div>
+    }
+    @if(!investimentoModel().verificaSeDataInicialEhMaiorOuIgualQueDataAtual() && dataInicial.touched){
+    <div class="invalid-feedback">Data inicial tem que ser maior ou igual que a data atual.</div>
+    }
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <label class="form-label">Data Final</label>
+    <input type="date" [(ngModel)]="investimentoModel().dtFinal" required class="form-control" #dataFinal="ngModel"
+      [ngClass]="{'is-invalid': (!investimentoModel().verificaSeDataFinalEhMaiorQueDataInicial() && dataFinal.touched) 
+      || (dataFinal.invalid && dataFinal.touched)}" />
+    @if(dataFinal.invalid && dataFinal.touched){
+    <div class="invalid-feedback">Data final é obrigatória.</div>
+    }
+    @if(!investimentoModel().verificaSeDataFinalEhMaiorQueDataInicial() && dataInicial.touched){
+    <div class="invalid-feedback">Data final tem que ser maior que a data inicial.</div>
+    }
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <label class="form-label">Indexador</label>
+    <select [(ngModel)]="enumIndexadorDescricao" required class="form-select" #indexador="ngModel"
+      [ngClass]="{'is-invalid': indexador.invalid && indexador.touched}">
+      @for (item of listaEnumIndexadorDescricao(); track $index;) {
+      <option [ngValue]="item">{{ item.descricao }}</option>
+      }
+    </select>
+    @if(indexador.invalid && indexador.touched){
+    <div class="invalid-feedback">Indexador é obrigatório.</div>
+    }
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4">
+    <label class="form-label">Dias Carência</label>
+    <input type="number" [(ngModel)]="investimentoModel().nmDiasCarencia" required class="form-control"
+      #diasCarencia="ngModel" [min]="0" [ngClass]="{'is-invalid': diasCarencia.invalid && diasCarencia.touched}" />
+    @if(diasCarencia.invalid && diasCarencia.touched){
+    <div class="invalid-feedback">Dias carência é obrigatório.</div>
+    }
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4 align-self-end">
+    <div class="form-check">
+      <input type="checkbox" [(ngModel)]="investimentoModel().boLiquidezDiaria" class="form-check-input"
+        id="liquidezDiaria" />
+      <label class="form-check-label" for="liquidezDiaria">Liquidez Diária</label>
+    </div>
+  </div>
+
+  <div class="col-12 col-lg-6 col-xxl-4 align-self-end">
+    <div class="form-check">
+      <input type="checkbox" [(ngModel)]="investimentoModel().boIsentoImposto" class="form-check-input"
+        id="isentoImposto" />
+      <label class="form-check-label" for="isentoImposto">Isento Imposto</label>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-between">
+  <button type="button" class="btn btn-outline-primary" (click)="volta()">Volta</button>
+  <button type="button" class="btn btn-outline-success" (click)="adicionaInvestimento()">Adiciona</button>
+</div>
+}
