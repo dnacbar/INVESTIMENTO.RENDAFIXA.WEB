@@ -12,7 +12,7 @@ import { TabelaRendaFixaComponent } from '../../../../../library/component/tabel
   styleUrl: './lista.scss'
 })
 export class Lista {
-  @Input() listaDeResgate!: Signal<Resgate[]>;
+  @Input() listaDeResgateSignal!: Signal<Resgate[]>;
 
   constructor(public datePipe: DatePipe, public currencyPipe: CurrencyPipe, private router: Router) { }
   

@@ -1,10 +1,10 @@
-import { ConsultaResgate } from './../../../service/consulta-resgate';
-import { Component, inject, model, OnDestroy, OnInit } from '@angular/core';
-import { Lista } from '../lista/lista';
-import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Component, inject, model } from '@angular/core';
+import { BloqueioInvestimento } from '../../../model/bloqueio-investimento';
 import { InvestidorDataBinding } from '../../../../investidor/service/investidor-data-binding';
-import { Resgate } from '../../../model/resgate';
+import { Router } from '@angular/router';
+import { ConsultaBloqueioInvestimento } from '../../../service/consulta-bloqueio-investimento';
+import { Subject, takeUntil } from 'rxjs';
+import { Lista } from "../lista/lista";
 
 @Component({
   selector: 'app-index',
@@ -12,10 +12,10 @@ import { Resgate } from '../../../model/resgate';
   templateUrl: './index.html',
   styleUrl: './index.scss'
 })
-export class Index implements OnInit, OnDestroy {
-  public listaDeResgateModel = model<Resgate[]>([]);
+export class Index {
+ public listaDeBloqueioInvestimentoModel = model<BloqueioInvestimento[]>([]);
 
-  private consultaResgate = inject(ConsultaResgate);
+  private consultaBloqueioInvestimento = inject(ConsultaBloqueioInvestimento);
   private investidorDataBinding = inject(InvestidorDataBinding);
   private router = inject(Router);
 
@@ -28,15 +28,15 @@ export class Index implements OnInit, OnDestroy {
       .subscribe({
         next: x => {
           if (x.verificaSeEstaVazio()) {
-            this.listaDeResgateModel.set([]);
+            this.listaDeBloqueioInvestimentoModel.set([]);
             return;
           }
-
-          this.consultaResgate.listaResgateDoInvestidor(x.converteEmListaResgateDoInvestidorSignature())
+ 
+          this.consultaBloqueioInvestimento.listaBloqueioInvestimento(x.converteEmListaBloqueioInvestimentoSignature())
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: result => {
-                this.listaDeResgateModel.set(result);
+                this.listaDeBloqueioInvestimentoModel.set(result);
               },
               error: err => console.error('Erro na consulta de resgate: ' + err),
             });
@@ -56,7 +56,7 @@ export class Index implements OnInit, OnDestroy {
     this.router.navigateByUrl('/home');
   }
 
-  public adicionaResgate(): void {
-    this.router.navigateByUrl('/resgate/adiciona');
+  public adicionaBloqueioInvestimento(): void {
+    this.router.navigateByUrl('/bloqueio-investimento/adiciona');
   }
 }

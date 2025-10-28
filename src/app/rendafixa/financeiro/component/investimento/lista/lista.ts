@@ -13,7 +13,7 @@ import { TabelaRendaFixaComponent } from '../../../../../library/component/tabel
   styleUrl: './lista.scss'
 })
 export class Lista {
-  @Input() listaDeInvestimento!: Signal<Investimento[]>;
+  @Input() listaDeInvestimentoSignal!: Signal<Investimento[]>;
 
   constructor(public ngxMaskPipe: NgxMaskPipe, public datePipe: DatePipe, public currencyPipe: CurrencyPipe, public percentPipe: PercentPipe, private router: Router) { }
 

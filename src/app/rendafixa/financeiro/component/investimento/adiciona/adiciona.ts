@@ -38,7 +38,9 @@ export class Adiciona implements OnInit, OnDestroy {
   }
 
   public adicionaInvestimento() {
+    this.investimentoModel().boCarregandoInvestimento = true;
     this.investimentoModel().enumIndexador = this.enumIndexadorDescricao.id;
+    
     this.manipulaInvestimento.adicionaInvestimento(this.investimentoModel().converteEmSignatureAdicionaInvestimento())
       .pipe(takeUntil(this.destroy$))
       .subscribe({

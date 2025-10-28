@@ -11,6 +11,6 @@ export class ManipulaResgate {
   private httpCliente = inject(HttpClient);
 
   public adicionaResgate(signature: AdicionaResgateSignature): Observable<string> {
-    return this.httpCliente.post<string>(`${environment.urlBase}ManipulaResgate/AdicionaResgate`, signature);
+    return this.httpCliente.post<string>(`${environment.urlBase}ManipulaResgate/Adiciona`, signature);
   }
 }

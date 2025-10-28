@@ -12,8 +12,8 @@ export class ConsultaInvestidor {
   private httpClient = inject(HttpClient);
 
   public listaInvestidor() : Observable<Investidor[]> {
-    return this.httpClient.post<ListaClienteComInvestimentoAtivoResult[]>(`${environment.urlBase}ConsultaInvestidor/ListaInvestidorComInvestimento`, {})
-      .pipe(map(result => result.map(item => Investidor.converteInvestidor(item)))
+    return this.httpClient.post<ListaClienteComInvestimentoAtivoResult[]>(`${environment.urlBase}ConsultaInvestidor/Lista`, {})
+      .pipe(map(result => result.map(item => Investidor.converteEmInvestidor(item)))
       );
   }
 }

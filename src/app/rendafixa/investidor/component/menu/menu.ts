@@ -15,10 +15,10 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrl: './menu.scss'
 })
 export class Menu implements OnInit, OnDestroy {
-  private menuInvestidor = new MenuInvestidor();
-
-  public menuInvestidorModel = model<MenuInvestidor>(this.menuInvestidor);
+  public menuInvestidorModel = model<MenuInvestidor>(new MenuInvestidor());
   public listaDeInvestidor = model<Investidor[]>([]);
+
+  private menuInvestidor = new MenuInvestidor();
 
   private consultaInvestidor = inject(ConsultaInvestidor);
   private investidorDataBinding = inject(InvestidorDataBinding);

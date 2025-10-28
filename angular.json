@@ -53,11 +53,11 @@
               "node_modules/bootstrap-icons/font/bootstrap-icons.css",
               "src/styles.scss"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
+              "baseHref": "/INVESTIMENTO.RENDAFIXA.WEBSITE/",
               "budgets": [
                 {
                   "type": "initial",

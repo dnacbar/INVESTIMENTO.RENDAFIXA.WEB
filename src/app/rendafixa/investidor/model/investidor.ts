@@ -2,6 +2,7 @@ import { ListaInvestimentoComResgateDisponivelSignature } from './../../financei
 import { ListaInvestimentoSignature } from "../../financeiro/service/signature/lista-investimento-signature";
 import { ListaResgateDoInvestidorSignature } from "../../financeiro/service/signature/lista-resgate-do-investidor-signature";
 import { ListaClienteComInvestimentoAtivoResult } from "../service/result/lista-cliente-com-investimento-ativo-result";
+import { ListaBloqueioInvestimentoSignature } from '../../juridico/service/signature/lista-bloqueio-investimento-signature';
 
 export class Investidor {
     public idInvestidor = '';
@@ -11,14 +12,11 @@ export class Investidor {
         return this.idInvestidor === '' && this.documentoFederal === '';
     }
     
-    public static converteInvestidor(result: ListaClienteComInvestimentoAtivoResult): Investidor {
-        const investidor = new Investidor();
-        if (!result)
-            return investidor;
-
-        investidor.documentoFederal = result?.docFederal;
-        investidor.idInvestidor = result?.investidor;
-        return investidor;
+    public converteEmListaBloqueioInvestimentoSignature(): ListaBloqueioInvestimentoSignature {
+        return {
+            investidor: this.idInvestidor,
+            docFederal: this.documentoFederal
+        } as ListaBloqueioInvestimentoSignature;
     }
 
     public converteEmListaInvestimentoSignature(): ListaInvestimentoSignature {
@@ -40,5 +38,15 @@ export class Investidor {
             investidor: this.idInvestidor,
             docFederal: this.documentoFederal
         } as ListaResgateDoInvestidorSignature;
+    }
+
+    public static converteEmInvestidor(result: ListaClienteComInvestimentoAtivoResult): Investidor {
+        const investidor = new Investidor();
+        if (!result)
+            return investidor;
+
+        investidor.documentoFederal = result?.docFederal;
+        investidor.idInvestidor = result?.investidor;
+        return investidor;
     }
 }

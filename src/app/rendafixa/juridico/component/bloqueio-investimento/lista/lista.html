@@ -1,0 +1,6 @@
+<app-tabela-renda-fixa [listaDeColuna]="[
+    {titulo:'Investimento', campo:'idInvestimento', pipe:null},
+    {titulo:'Valor Bloqueado', campo:'nmValorBloqueado', pipe:currencyPipe},
+    {titulo:'Motivo', campo:'txMotivo', pipe:null},
+]" [listaDeDado]="listaDeBloqueioInvestimentoSignal()" [habilitaColunaAcao]="false">
+</app-tabela-renda-fixa>

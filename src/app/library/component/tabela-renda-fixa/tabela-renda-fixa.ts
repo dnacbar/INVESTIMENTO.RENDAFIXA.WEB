@@ -13,6 +13,7 @@ export class TabelaRendaFixaComponent<T> {
   @Input() listaDeDado: T[] = [];
   @Input() listaDeColuna: { campo: keyof T | ((item: T) => any), titulo: string, pipe: PipeTransform | null }[] = [];
   @Input() cssTabela = 'table table-hover';
+  @Input() habilitaColunaAcao = true;
 
   @Output() eventoVisualiza = new EventEmitter<T>();
 

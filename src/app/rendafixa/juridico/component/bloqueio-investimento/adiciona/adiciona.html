@@ -1,0 +1,54 @@
+@if (bloqueioInvestimentoModel().boCarrengandoBloqueioInvestimento) {
+<div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>
+}
+@else{
+<div class="row gx-4 gy-2 mb-3">
+    <div class="col-12 col-lg-6 col-xxl-4">
+        <label class="form-label">Selecione o Investimento</label>
+        <select [(ngModel)]="investimentoModel" required class="form-select" #investimento="ngModel"
+            [ngClass]="{'is-invalid': investimento.invalid && investimento.touched}">
+            @for (item of listaDeInvestimentoModel(); track $index;) {
+            <option [ngValue]="item">{{ item.idInvestimento }}</option>
+            }
+        </select>
+        @if(investimento.invalid && investimento.touched){
+        <div class="invalid-feedback">Investimento é obrigatório.</div>
+        }
+    </div>
+
+    <div class="col-12 col-lg-6 col-xxl-4">
+        <label class="form-label">Valor Disponível</label>
+        <input type="text" required class="form-control" [value]="investimentoModel().nmValorFinal | currency:'BRL'"
+            disabled />
+    </div>
+
+    <div class="col-12 col-lg-6 col-xxl-4">
+        <label class="form-label">Valor Bloqueado</label>
+        <input type="number" [(ngModel)]="bloqueioInvestimentoModel().nmValorBloqueado" required class="form-control"
+            #valorBloqueado="ngModel" [min]="1" [max]="investimentoModel().nmValorFinal"
+            [ngClass]="{'is-invalid': valorBloqueado.invalid && valorBloqueado.touched}" />
+        @if(valorBloqueado.invalid && valorBloqueado.touched){
+        <div class="invalid-feedback">{{ bloqueioInvestimentoModel().nmValorBloqueado >
+            investimentoModel().nmValorFinal ?
+            'Valor bloqueado tem que ser menor que o valor disponível.' :
+            'Valor bloqueado é obrigatório.' }}</div>
+        }
+    </div>
+
+    <div class="col-12">
+        <label class="form-label">Motivo</label>
+        <textarea [(ngModel)]="bloqueioInvestimentoModel().txMotivo" required class="form-control" #motivo="ngModel"
+            [ngClass]="{'is-invalid': motivo.invalid && motivo.touched}"></textarea>
+        @if(motivo.invalid && motivo.touched){
+        <div class="invalid-feedback">Motivo é obrigatório.</div>
+        }
+    </div>
+</div>
+
+<div class="d-flex justify-content-between">
+    <button type="button" class="btn btn-outline-primary" (click)="volta()">Volta</button>
+    <button type="button" class="btn btn-outline-success" (click)="adicionaBloqueio()">Adiciona</button>
+</div>
+}

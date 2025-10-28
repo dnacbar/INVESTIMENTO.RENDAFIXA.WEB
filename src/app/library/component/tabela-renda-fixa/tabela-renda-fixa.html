@@ -20,13 +20,16 @@
             @for (item of listaDeColuna; track $index) {
             <th>{{ item.titulo }}</th>
             }
+            @if(habilitaColunaAcao)
+            {
             <th>Ações</th>
+            }
         </tr>
     </thead>
     <tbody>
         @if (dadosPaginados.length === 0) {
         <tr>
-            <td [attr.colspan]="listaDeColuna.length + 1" class="text-center">Nenhum registro encontrado.</td>
+            <td [attr.colspan]="listaDeColuna.length + 1" class="text-center">Nenhum registro para exibir.</td>
         </tr>
         }
         @else {
@@ -35,12 +38,14 @@
             @for (col of listaDeColuna; track $index) {
             <td>{{ obtemValor(item, col.campo, col.pipe) }}</td>
             }
+            @if (habilitaColunaAcao) {
             <td>
                 <button class="btn btn-outline-primary btn-sm me-1" (click)="eventoVisualiza.emit(item)"
                     title="Visualizar">
                     <i class="bi bi-eye"></i>
                 </button>
             </td>
+            }
         </tr>
         }
         }

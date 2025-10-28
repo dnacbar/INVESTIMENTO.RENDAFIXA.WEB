@@ -14,8 +14,8 @@ import { ListaInvestimentoComResgateDisponivelSignature } from './signature/list
 export class ConsultaInvestimento {
   private httpClient = inject(HttpClient);
 
-  public listaInvestimentoQueNaoEstaLiquidado(signature: ListaInvestimentoSignature): Observable<Investimento[]> {
-    return this.httpClient.post<ListaInvestimentoResult[]>(`${environment.urlBase}ConsultaInvestimento/ListaInvestimento`, signature)
+  public listaInvestimento(signature: ListaInvestimentoSignature): Observable<Investimento[]> {
+    return this.httpClient.post<ListaInvestimentoResult[]>(`${environment.urlBase}ConsultaInvestimento/Lista`, signature)
     .pipe(map(x => x.map(result => Investimento.converteInvestimento(result))));
   }
 

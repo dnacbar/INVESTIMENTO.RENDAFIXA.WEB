@@ -1,13 +1,15 @@
+
 import { Component, inject, model } from '@angular/core';
-import { Resgate } from '../../../model/resgate';
+import { BloqueioInvestimento } from '../../../model/bloqueio-investimento';
 import { Router } from '@angular/router';
 import { InvestidorDataBinding } from '../../../../investidor/service/investidor-data-binding';
-import { ManipulaResgate } from '../../../service/manipula-resgate';
+import { ManipulaBloqueioInvestimento } from '../../../service/manipula-bloqueio-investimento';
 import { Subject, takeUntil } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ConsultaInvestimento } from '../../../service/consulta-investimento';
-import { Investimento } from '../../../model/investimento';
+import { ConsultaInvestimento } from '../../../../financeiro/service/consulta-investimento';
+import { Investimento } from '../../../../financeiro/model/investimento';
+
 
 @Component({
   selector: 'app-adiciona',
@@ -16,14 +18,14 @@ import { Investimento } from '../../../model/investimento';
   styleUrl: './adiciona.scss'
 })
 export class Adiciona {
-  public resgateModel = model<Resgate>(new Resgate());
+  public bloqueioInvestimentoModel = model<BloqueioInvestimento>(new BloqueioInvestimento());
   public listaDeInvestimentoModel = model<Investimento[]>([]);
   public investimentoModel = model<Investimento>(new Investimento());
 
   private consultaInvestimento = inject(ConsultaInvestimento);
   private investidorDataBinding = inject(InvestidorDataBinding);
   private location = inject(Location);
-  private manipulaResgate = inject(ManipulaResgate);
+  private manipulaBloqueio = inject(ManipulaBloqueioInvestimento);
   private router = inject(Router);
 
   private destroy$ = new Subject<void>();
@@ -39,11 +41,11 @@ export class Adiciona {
           }
           this.investimentoModel.set(new Investimento());
 
-          this.consultaInvestimento.listaInvestimentoComResgateDisponivel(x.converteEmListaInvestimentoComResgateDisponivelSignature())
+          this.consultaInvestimento.listaInvestimento(x.converteEmListaInvestimentoSignature())
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: result => { this.listaDeInvestimentoModel.set(result); },
-              error: err => console.error('Erro na consulta de investimento com resgate disponível: ' + err),
+              error: err => console.error('Erro na consulta de investimento: ' + err),
             });
         },
         error: err => console.error('Erro ao selecionar o investidor: ' + err),
@@ -55,23 +57,20 @@ export class Adiciona {
     this.destroy$.complete();
   }
 
-  public adicionaResgate() {
-    this.resgateModel().boCarregandoResgate = true;
-    this.resgateModel().idInvestimento = this.investimentoModel().idInvestimento;
+  public adicionaBloqueio() {
+    this.bloqueioInvestimentoModel().boCarrengandoBloqueioInvestimento = true;
+    this.bloqueioInvestimentoModel().idInvestimento = this.investimentoModel().idInvestimento;
 
-    this.manipulaResgate.adicionaResgate(this.resgateModel().converteEmSignatureAdicionaResgate())
+    this.manipulaBloqueio.adicionaBloqueioInvestimento(this.bloqueioInvestimentoModel().converteEmAdicionaBloqueioInvestimentoSignature())
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res) => {
-          if (res) {
-            this.router.navigate(['/resgate']);
-            return;
-          }
-          this.resgateModel().boCarregandoResgate = false;
+        next: () => {
+          this.router.navigate(['/bloqueio-investimento']);
+          this.bloqueioInvestimentoModel().boCarrengandoBloqueioInvestimento = false;
         },
         error: (err) => {
           console.log(err);
-          this.resgateModel().boCarregandoResgate = false;
+          this.bloqueioInvestimentoModel().boCarrengandoBloqueioInvestimento = false;
         }
       });
   }

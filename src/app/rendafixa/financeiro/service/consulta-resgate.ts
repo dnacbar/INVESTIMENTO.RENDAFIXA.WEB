@@ -14,7 +14,7 @@ export class ConsultaResgate {
   private httpClient = inject(HttpClient);
 
   public listaResgateDoInvestidor(signature: ListaResgateDoInvestidorSignature): Observable<Resgate[]> {
-    return this.httpClient.post<ListaResgateDoInvestidorResult[]>(`${environment.urlBase}ConsultaResgate/ListaResgateDoInvestidor`, signature)
+    return this.httpClient.post<ListaResgateDoInvestidorResult[]>(`${environment.urlBase}ConsultaResgate/Lista`, signature)
       .pipe(map(x => x.map(result => Resgate.converteResgate(result))));
   }
 }

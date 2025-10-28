@@ -4,6 +4,5 @@
     { titulo: 'Valor Resgate', campo: 'nmValorResgate', pipe:currencyPipe},
     { titulo: 'Valor Imposto', campo: 'nmValorImposto', pipe:currencyPipe },
     { titulo: 'Valor Disponível', campo: 'nmValorDisponivel', pipe:currencyPipe},
-    ]" [listaDeDado]="listaDeResgate()" (eventoVisualiza)="visualizaResgate($event)"
-    textoVazio="Nenhum resgate encontrado.">
+    ]" [listaDeDado]="listaDeResgateSignal()" (eventoVisualiza)="visualizaResgate($event)">
 </app-tabela-renda-fixa>

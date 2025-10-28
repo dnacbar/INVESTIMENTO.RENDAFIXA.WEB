@@ -32,7 +32,9 @@ export class Index implements OnInit, OnDestroy {
             return;
           }
 
-          this.consultaInvestimento.listaInvestimentoQueNaoEstaLiquidado(x.converteEmListaInvestimentoSignature())
+          this.listaDeInvestimentoModel.set([]);
+
+          this.consultaInvestimento.listaInvestimento(x.converteEmListaInvestimentoSignature())
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: result => {

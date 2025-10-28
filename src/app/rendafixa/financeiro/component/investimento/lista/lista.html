@@ -8,6 +8,6 @@
         { titulo: 'Data Final', campo: 'dtFinal', pipe: datePipe },
         { titulo: 'Isento Imposto', campo: exibeIsentoImposto, pipe: null },
         { titulo: 'Indexador', campo: exibeIndexador, pipe: null },
-    ]" [listaDeDado]="listaDeInvestimento()" (eventoVisualiza)="visualizaInvestimento($event)"
+    ]" [listaDeDado]="listaDeInvestimentoSignal()" (eventoVisualiza)="visualizaInvestimento($event)"
     textoVazio="Nenhum investimento encontrado.">
 </app-tabela-renda-fixa>

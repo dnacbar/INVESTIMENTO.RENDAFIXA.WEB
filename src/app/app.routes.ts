@@ -36,6 +36,19 @@ export const routes: Routes = [
         ]
     },
     {
+        path: 'bloqueio-investimento',
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./rendafixa/juridico/component/bloqueio-investimento/index/index').then(m => m.Index)
+            },
+            {
+                path: 'adiciona',
+                loadComponent: () => import('./rendafixa/juridico/component/bloqueio-investimento/adiciona/adiciona').then(m => m.Adiciona)
+            }
+        ]
+    },
+    {
         path: 'home',
         loadComponent: () => import('./rendafixa/home/component/index/index').then(m => m.Index)
     },
@@ -44,4 +57,9 @@ export const routes: Routes = [
         redirectTo: '/home',
         pathMatch: 'full'
     },
+    {
+        path: '**',
+        redirectTo: '/home',
+        pathMatch: 'full'
+    }
 ];

@@ -10,6 +10,6 @@ export class ManipulaInvestimento {
   private httpCliente = inject(HttpClient);
 
   public adicionaInvestimento(signature: AdicionaInvestimentoSignature): Observable<string> {
-    return this.httpCliente.post<string>(`${environment.urlBase}ManipulaInvestimento/AdicionaInvestimento`, signature);
+    return this.httpCliente.post<string>(`${environment.urlBase}ManipulaInvestimento/Adiciona`, signature);
   }
 }
