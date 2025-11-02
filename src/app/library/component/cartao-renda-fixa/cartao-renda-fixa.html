@@ -7,7 +7,13 @@
         <dl class="row">
             @for (item of listaDePropriedade; track $index) {
             <dt class="col-6">{{item.titulo}}</dt>
+            @if(item.caminho) {
+            <dd class="col-6"><a [routerLink]="[item.caminho]" [state]="{investimento: dado}">{{
+                    obtemValor(dado, item.propriedade, item.pipe) }}</a>
+            </dd>
+            } @else {
             <dd class="col-6">{{ obtemValor(dado, item.propriedade, item.pipe) }}</dd>
+            }
             }
         </dl>
     </div>

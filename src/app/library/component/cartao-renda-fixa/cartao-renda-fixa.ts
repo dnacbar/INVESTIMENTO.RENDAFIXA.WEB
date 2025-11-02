@@ -1,21 +1,21 @@
 import { CurrencyPipe, DatePipe, Location, PercentPipe } from '@angular/common';
 import { Component, inject, Input, PipeTransform, Signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { NgxMaskPipe } from 'ngx-mask';
-import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-cartao-renda-fixa',
+  imports: [RouterLink],
   templateUrl: './cartao-renda-fixa.html',
   styleUrl: './cartao-renda-fixa.scss'
 })
 export class CartaoRendaFixaComponent<T> {
   @Input() dado!: T;
-  @Input() listaDePropriedade: { propriedade: keyof T | ((item: T) => string), titulo: string, pipe: PipeTransform | null }[] = [];
+  @Input() listaDePropriedade: { propriedade: keyof T | ((item: T) => string), titulo: string, pipe: PipeTransform | null, caminho?: string }[] = [];
   @Input() cssTabela = 'table table-striped table-bordered';
   @Input() tituloCartao = '';
 
   private location = inject(Location);
-  private router = inject(Router);
 
   public obtemValor(item: T, propriedade: keyof T | ((item: T) => string), pipe: PipeTransform | null): any {
     let valor: any;
