@@ -8,7 +8,7 @@
             @for (item of listaDePropriedade; track $index) {
             <dt class="col-6">{{item.titulo}}</dt>
             @if(item.caminho) {
-            <dd class="col-6"><a [routerLink]="[item.caminho]" [state]="{investimento: dado}">{{
+            <dd class="col-6"><a [routerLink]="[item.caminho]" [state]="{investimento: obtemValor(dado, item.propriedade, item.pipe)}">{{
                     obtemValor(dado, item.propriedade, item.pipe) }}</a>
             </dd>
             } @else {

@@ -1,1 +1,9 @@
-<p>lista works!</p>
+<app-tabela-renda-fixa [listaDeColuna]="[
+{titulo: 'Data Posição', campo: 'dtPosicao', pipe:datePipe},
+{titulo: 'Valor Bruto Total', campo: 'nmValorBrutoTotal', pipe:currencyPipe},
+{titulo: 'Valor Líquido Total', campo: 'nmValorLiquidoTotal', pipe:currencyPipe},
+{titulo: 'Valor Bruto', campo: 'nmValorBruto', pipe:currencyPipe},
+{titulo: 'Valor Líquido', campo: 'nmValorLiquido', pipe:currencyPipe},
+{titulo: 'Valor Imposto Total', campo: 'nmValorImpostoTotal', pipe:currencyPipe}
+]" [listaDeDado]="listaDePosicao()" [habilitaColunaAcao]="false">
+</app-tabela-renda-fixa>

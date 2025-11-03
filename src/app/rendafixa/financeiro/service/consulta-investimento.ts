@@ -5,7 +5,7 @@ import { ListaInvestimentoSignature } from './signature/lista-investimento-signa
 import { map, Observable } from 'rxjs';
 import { ListaInvestimentoResult } from './result/lista-investimento-result';
 import { Investimento } from '../model/investimento';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { ListaInvestimentoComResgateDisponivelSignature } from './signature/lista-investimento-com-resgate-disponivel-signature';
 
 @Injectable({

@@ -11,7 +11,7 @@ import { NgxMaskPipe } from 'ngx-mask';
 })
 export class TabelaRendaFixaComponent<T> {
   @Input() listaDeDado: T[] = [];
-  @Input() listaDeColuna: { campo: keyof T | ((item: T) => any), titulo: string, pipe: PipeTransform | null }[] = [];
+  @Input() listaDeColuna: { campo: keyof T | ((item: T) => any), titulo: string, pipe?: PipeTransform}[] = [];
   @Input() cssTabela = 'table table-hover';
   @Input() habilitaColunaAcao = true;
 
@@ -33,7 +33,7 @@ export class TabelaRendaFixaComponent<T> {
     return this.listaDeDado.slice(inicio, inicio + this.quantidadePorPagina());
   }
 
-  public obtemValor(item: T, campo: keyof T | ((item: T) => any), pipe: PipeTransform | null): any {
+  public obtemValor(item: T, campo: keyof T | ((item: T) => any), pipe?: PipeTransform): any {
     let valor: any;
     if (typeof campo === 'function') {
       valor = campo(item);

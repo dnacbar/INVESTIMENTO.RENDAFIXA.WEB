@@ -1,3 +1,5 @@
+import { ListaCincoUltimosImpostosPosicoesResult } from "./lista-cinco-ultimos-impostos-posicoes-result";
+
 export interface ListaCincoUltimasPosicoesResult {
   posicao: number;
   dtPosicao: Date;
@@ -5,4 +7,5 @@ export interface ListaCincoUltimasPosicoesResult {
   vlLiquidoTotal: number;
   vlBruto: number;
   vlLiquido: number;
+  listaImpostoPosicao: ListaCincoUltimosImpostosPosicoesResult[];
 }

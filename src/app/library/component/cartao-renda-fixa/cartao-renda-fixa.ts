@@ -11,13 +11,13 @@ import { NgxMaskPipe } from 'ngx-mask';
 })
 export class CartaoRendaFixaComponent<T> {
   @Input() dado!: T;
-  @Input() listaDePropriedade: { propriedade: keyof T | ((item: T) => string), titulo: string, pipe: PipeTransform | null, caminho?: string }[] = [];
+  @Input() listaDePropriedade: { propriedade: keyof T | ((item: T) => string), titulo: string, pipe?: PipeTransform, caminho?: string }[] = [];
   @Input() cssTabela = 'table table-striped table-bordered';
   @Input() tituloCartao = '';
 
   private location = inject(Location);
 
-  public obtemValor(item: T, propriedade: keyof T | ((item: T) => string), pipe: PipeTransform | null): any {
+  public obtemValor(item: T, propriedade: keyof T | ((item: T) => string), pipe?: PipeTransform): any {
     let valor: any;
     if (typeof propriedade === 'function') {
       valor = propriedade(item);

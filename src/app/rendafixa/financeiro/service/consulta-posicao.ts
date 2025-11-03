@@ -4,7 +4,7 @@ import { Observable, map } from 'rxjs';
 import { ListaCincoUltimasPosicoesResult } from './result/lista-cinco-ultimas-posicoes-result';
 import { Posicao } from '../model/posicao';
 import { ListaCincoUltimasPosicoesSignature } from './signature/lista-cinco-ultimas-posicoes-signature';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 import { BloqueioInvestimento } from '../model/bloqueio-investimento';
 import { ListaBloqueioInvestimentoSignature } from './signature/lista-bloqueio-investimento-signature';
 import { ListaBloqueioInvestimentoResult } from './result/lista-bloqueio-investimento-result';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

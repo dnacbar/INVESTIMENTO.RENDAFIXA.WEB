@@ -18,8 +18,6 @@ export class Menu implements OnInit, OnDestroy {
   public menuInvestidorModel = model<MenuInvestidor>(new MenuInvestidor());
   public listaDeInvestidor = model<Investidor[]>([]);
 
-  private menuInvestidor = new MenuInvestidor();
-
   private consultaInvestidor = inject(ConsultaInvestidor);
   private investidorDataBinding = inject(InvestidorDataBinding);
 
@@ -30,21 +28,18 @@ export class Menu implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: x => {
-          this.menuInvestidor.boCarregandoInvestidor = false;
-          this.menuInvestidorModel.set(this.menuInvestidor);
+          this.menuInvestidorModel().boCarregandoInvestidor = false;
           this.listaDeInvestidor.set(x);
         },
         error: () => {
-          this.menuInvestidor.boCarregandoInvestidor = true;
-          this.menuInvestidorModel.set(this.menuInvestidor);
+          this.menuInvestidorModel().boCarregandoInvestidor = true;
         }
       });
 
     this.investidorDataBinding.habilitaSelecaoDeInvestidorEmitter$
       .pipe(takeUntil(this.destroy$))
       .subscribe(x => {
-        this.menuInvestidor.boHabilitaSelecaoInvestidor = x;
-        this.menuInvestidorModel.set(this.menuInvestidor);
+        this.menuInvestidorModel().boHabilitaSelecaoInvestidor = x;
       });
   }
 
@@ -54,7 +49,7 @@ export class Menu implements OnInit, OnDestroy {
   }
 
   public investidorSelecionado(): void {
-    const investidor = this.listaDeInvestidor().find(inv => inv.idInvestidor === this.menuInvestidor.idInvestidorSelecionado);
+    const investidor = this.listaDeInvestidor().find(inv => inv.idInvestidor === this.menuInvestidorModel().idInvestidorSelecionado);
     this.investidorDataBinding.enviaInvestidor(investidor ?? new Investidor());
   }
 }

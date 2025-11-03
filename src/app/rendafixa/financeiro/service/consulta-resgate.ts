@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 import { Resgate } from '../model/resgate';
 import { ListaResgateDoInvestidorResult } from './result/lista-resgate-do-investidor-result';
 import { ListaResgateDoInvestidorSignature } from './signature/lista-resgate-do-investidor-signature';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -2,6 +2,19 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
+        path: 'bloqueio-investimento',
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./rendafixa/juridico/component/bloqueio-investimento/index/index').then(m => m.Index)
+            },
+            {
+                path: 'adiciona',
+                loadComponent: () => import('./rendafixa/juridico/component/bloqueio-investimento/adiciona/adiciona').then(m => m.Adiciona)
+            }
+        ]
+    },
+    {
         path: 'investimento',
         children: [
             {
@@ -19,6 +32,15 @@ export const routes: Routes = [
         ]
     },
     {
+        path: 'posicao',
+        children: [
+            {
+                path: '',
+                loadComponent: () => import('./rendafixa/financeiro/component/posicao/index/index').then(m => m.Index)
+            }
+        ]
+    },
+    {
         path: 'resgate',
         children: [
             {
@@ -32,19 +54,6 @@ export const routes: Routes = [
             {
                 path: 'adiciona',
                 loadComponent: () => import('./rendafixa/financeiro/component/resgate/adiciona/adiciona').then(m => m.Adiciona)
-            }
-        ]
-    },
-    {
-        path: 'bloqueio-investimento',
-        children: [
-            {
-                path: '',
-                loadComponent: () => import('./rendafixa/juridico/component/bloqueio-investimento/index/index').then(m => m.Index)
-            },
-            {
-                path: 'adiciona',
-                loadComponent: () => import('./rendafixa/juridico/component/bloqueio-investimento/adiciona/adiciona').then(m => m.Adiciona)
             }
         ]
     },

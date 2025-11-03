@@ -21,9 +21,9 @@ export class Adiciona implements OnInit, OnDestroy {
   public listaEnumIndexadorDescricao = signal<IEnumIndexadorDescricao[]>(ListaEnumIndexadorDescricao);
   public enumIndexadorDescricao = this.listaEnumIndexadorDescricao()[0];
 
+  private investidorDataBinding = inject(InvestidorDataBinding);
   private location = inject(Location);
   private manipulaInvestimento = inject(ManipulaInvestimento);
-  private investidorDataBinding = inject(InvestidorDataBinding);
   private router = inject(Router);
 
   private destroy$ = new Subject<void>();

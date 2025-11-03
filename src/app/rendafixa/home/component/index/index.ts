@@ -1,7 +1,6 @@
+import { GraficoBarComponent } from '../grafico-bar/grafico-bar';
 import { InvestidorDataBinding } from './../../../investidor/service/investidor-data-binding';
 import { Component, inject, OnInit } from '@angular/core';
-import { GraficoTotalInvestido } from '../grafico-total-investido/grafico-total-investido';
-import { GraficoBarComponent } from '../grafico-bar/grafico-bar';
 
 @Component({
   selector: 'app-index',

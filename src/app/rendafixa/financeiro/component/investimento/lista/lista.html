@@ -6,8 +6,8 @@
         { titulo: 'Taxa Adicional', campo: 'nmTaxaAdicional', pipe: percentPipe },
         { titulo: 'Data Inicial', campo: 'dtInicial', pipe: datePipe },
         { titulo: 'Data Final', campo: 'dtFinal', pipe: datePipe },
-        { titulo: 'Isento Imposto', campo: exibeIsentoImposto, pipe: null },
-        { titulo: 'Indexador', campo: exibeIndexador, pipe: null },
+        { titulo: 'Isento Imposto', campo: exibeIsentoImposto },
+        { titulo: 'Indexador', campo: exibeIndexador },
     ]" [listaDeDado]="listaDeInvestimentoSignal()" (eventoVisualiza)="visualizaInvestimento($event)"
     textoVazio="Nenhum investimento encontrado.">
 </app-tabela-renda-fixa>
