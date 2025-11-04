@@ -14,13 +14,13 @@
     </div>
 </div>
 
-<table [class]="cssTabela">
+<table [class]="cssTabelaModel()" >
     <thead>
         <tr>
-            @for (item of listaDeColuna; track $index) {
+            @for (item of listaDeColunaModel(); track $index) {
             <th>{{ item.titulo }}</th>
             }
-            @if(habilitaColunaAcao)
+            @if(habilitaColunaAcaoModel())
             {
             <th>Ações</th>
             }
@@ -29,18 +29,18 @@
     <tbody>
         @if (dadosPaginados.length === 0) {
         <tr>
-            <td [attr.colspan]="listaDeColuna.length + 1" class="text-center">Nenhum registro para exibir.</td>
+            <td [attr.colspan]="listaDeColunaModel().length + 1" class="text-center">Nenhum registro para exibir.</td>
         </tr>
         }
         @else {
         @for(item of dadosPaginados; track $index) {
-        <tr>
-            @for (col of listaDeColuna; track $index) {
+        <tr style="cursor: pointer;" (click)="tabelaRendaFixaDataBinding.enviaItemSelecionado(item)">
+            @for (col of listaDeColunaModel(); track $index) {
             <td>{{ obtemValor(item, col.campo, col.pipe) }}</td>
             }
-            @if (habilitaColunaAcao) {
+            @if (habilitaColunaAcaoModel()) {
             <td>
-                <button class="btn btn-outline-primary btn-sm me-1" (click)="eventoVisualiza.emit(item)"
+                <button class="btn btn-outline-primary btn-sm me-1"
                     title="Visualizar">
                     <i class="bi bi-eye"></i>
                 </button>

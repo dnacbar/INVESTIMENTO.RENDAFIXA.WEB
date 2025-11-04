@@ -6,7 +6,6 @@ import { CartaoRendaFixaComponent } from '../../../../../library/component/carta
 
 @Component({
   selector: 'app-visualiza',
-  imports: [CartaoRendaFixaComponent],
   templateUrl: './visualiza.html',
   providers: [CurrencyPipe, DatePipe],
   styleUrl: './visualiza.scss'

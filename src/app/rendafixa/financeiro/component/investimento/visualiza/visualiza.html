@@ -1,4 +1,4 @@
-<app-cartao-renda-fixa [listaDePropriedade]="[
+<app-cartao-renda-fixa [listaDePropriedadeModel]="[
   {titulo:'Investimento', propriedade:'idInvestimento', caminho:'/posicao'},
   {titulo:'Documento Federal', propriedade:'txDocumentoFederal', pipe:ngxMaskPipe},
   {titulo:'Valor Inicial', propriedade:'nmValorInicial', pipe:currencyPipe},
@@ -14,4 +14,4 @@
   {titulo:'Liquidez Diária', propriedade:exibeLiquidezDiaria},
   {titulo:'Indexador', propriedade:exibeIndexador},
   {titulo:'Liquidado', propriedade:exibeLiquidado},
-]" [dado]="investimentoSignal()" [tituloCartao]="'investimento'"></app-cartao-renda-fixa>
+]" [dadoModel]="investimentoModel()" [tituloCartaoModel]="'investimento'"></app-cartao-renda-fixa>

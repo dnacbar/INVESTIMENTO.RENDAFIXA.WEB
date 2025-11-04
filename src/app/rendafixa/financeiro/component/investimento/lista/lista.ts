@@ -1,6 +1,6 @@
 import { CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
 import { Investimento } from '../../../model/investimento';
-import { Component, Input, Signal } from '@angular/core';
+import { Component, effect, model, signal } from '@angular/core';
 import { NgxMaskPipe } from 'ngx-mask';
 import { Router } from '@angular/router';
 import { TabelaRendaFixaComponent } from '../../../../../library/component/tabela-renda-fixa/tabela-renda-fixa';
@@ -13,9 +13,14 @@ import { TabelaRendaFixaComponent } from '../../../../../library/component/tabel
   styleUrl: './lista.scss'
 })
 export class Lista {
-  @Input() listaDeInvestimentoSignal!: Signal<Investimento[]>;
+  public listaDeInvestimentoModel = model<Investimento[]>([]);
+  public investimentoModel = model<any | null>(null);
 
-  constructor(public ngxMaskPipe: NgxMaskPipe, public datePipe: DatePipe, public currencyPipe: CurrencyPipe, public percentPipe: PercentPipe, private router: Router) { }
+  constructor(public ngxMaskPipe: NgxMaskPipe, public datePipe: DatePipe, public currencyPipe: CurrencyPipe, public percentPipe: PercentPipe, private router: Router) {
+    effect(() => {
+      this.investimentoModel.set(this.investimentoModel());
+    });
+  }
 
   public adicionaInvestimento(): void {
     this.router.navigateByUrl('/investimento/adiciona');
@@ -31,9 +36,5 @@ export class Lista {
 
   public exibeLiquidado(i: Investimento): string {
     return i.exibeLiquidado();
-  }
-
-  public visualizaInvestimento(investimento: Investimento): void {
-    this.router.navigateByUrl('/investimento/visualiza', { state: { investimento } });
   }
 }

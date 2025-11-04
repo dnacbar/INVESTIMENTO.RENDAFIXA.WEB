@@ -1,7 +1,9 @@
 import { CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
-import { Component, Input, Output, EventEmitter, model, PipeTransform } from '@angular/core';
+import { Component, inject, model, PipeTransform, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskPipe } from 'ngx-mask';
+import { Subject } from 'rxjs';
+import { TabelaRendaFixaDataBinding } from '../../service/tabela-renda-fixa-data-binding';
 
 @Component({
   selector: 'app-tabela-renda-fixa',
@@ -10,18 +12,17 @@ import { NgxMaskPipe } from 'ngx-mask';
   styleUrl: './tabela-renda-fixa.scss'
 })
 export class TabelaRendaFixaComponent<T> {
-  @Input() listaDeDado: T[] = [];
-  @Input() listaDeColuna: { campo: keyof T | ((item: T) => any), titulo: string, pipe?: PipeTransform}[] = [];
-  @Input() cssTabela = 'table table-hover';
-  @Input() habilitaColunaAcao = true;
-
-  @Output() eventoVisualiza = new EventEmitter<T>();
-
+  public listaDeDadoModel = model<T[]>([]);
+  public listaDeColunaModel = model<{ campo: keyof T | ((item: T) => any), titulo: string, pipe?: PipeTransform }[]>([]);
+  public cssTabelaModel = model('table table-hover');
+  public habilitaColunaAcaoModel = model(true);
   public quantidadePorPagina = model(10);
   public paginaAtual = model(1);
 
+  public tabelaRendaFixaDataBinding = inject(TabelaRendaFixaDataBinding<T>);
+
   get totalPaginas() {
-    return Math.ceil(this.listaDeDado.length / this.quantidadePorPagina());
+    return Math.ceil(this.listaDeDadoModel().length / this.quantidadePorPagina());
   }
 
   get paginas() {
@@ -30,7 +31,7 @@ export class TabelaRendaFixaComponent<T> {
 
   get dadosPaginados() {
     const inicio = (this.paginaAtual() - 1) * this.quantidadePorPagina();
-    return this.listaDeDado.slice(inicio, inicio + this.quantidadePorPagina());
+    return this.listaDeDadoModel().slice(inicio, inicio + this.quantidadePorPagina());
   }
 
   public obtemValor(item: T, campo: keyof T | ((item: T) => any), pipe?: PipeTransform): any {

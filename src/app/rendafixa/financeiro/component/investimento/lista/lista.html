@@ -1,4 +1,4 @@
-<app-tabela-renda-fixa [listaDeColuna]="[
+<app-tabela-renda-fixa [listaDeColunaModel]="[
         { titulo: 'Valor Inicial', campo: 'nmValorInicial', pipe:currencyPipe },
         { titulo: 'Valor Final', campo: 'nmValorFinal', pipe:currencyPipe },
         { titulo: 'Imposto', campo: 'nmValorImposto', pipe: currencyPipe },
@@ -8,6 +8,6 @@
         { titulo: 'Data Final', campo: 'dtFinal', pipe: datePipe },
         { titulo: 'Isento Imposto', campo: exibeIsentoImposto },
         { titulo: 'Indexador', campo: exibeIndexador },
-    ]" [listaDeDado]="listaDeInvestimentoSignal()" (eventoVisualiza)="visualizaInvestimento($event)"
+    ]" [listaDeDadoModel]="listaDeInvestimentoModel()"
     textoVazio="Nenhum investimento encontrado.">
 </app-tabela-renda-fixa>

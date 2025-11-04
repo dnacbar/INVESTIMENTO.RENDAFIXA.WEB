@@ -5,7 +5,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-lista',
-  imports: [CommonModule, TabelaRendaFixaComponent],
+  imports: [CommonModule],
   providers: [CurrencyPipe],
   templateUrl: './lista.html',
   styleUrl: './lista.scss'

@@ -1,7 +1,20 @@
 <div class="col-12">
-    <app-lista [listaDeInvestimentoSignal]="listaDeInvestimentoModel"></app-lista>
-</div>
-<div class="d-flex justify-content-between">
-    <button type="button" class="btn btn-outline-primary" (click)="irParaHome()">Ir para Home</button>
-    <button type="button" class="btn btn-outline-success" (click)="adicionaInvestimento()">Adicionar</button>
+    <div class="card mt-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Investimento</h5>
+            <div class="d-flex gap-2">
+                <button type="button" class="btn btn-outline-primary" (click)="irParaHome()">Ir para Home</button>
+                <button type="button" class="btn btn-outline-success"
+                    (click)="adicionaInvestimento()">Adicionar</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <app-lista [listaDeInvestimentoModel]="listaDeInvestimentoSignal()"></app-lista>
+            <div class="my-4">
+                @if (investimentoModel() !== null) {
+                <app-visualiza [investimentoModel]="investimentoModel()"></app-visualiza>
+                }
+            </div>
+        </div>
+    </div>
 </div>

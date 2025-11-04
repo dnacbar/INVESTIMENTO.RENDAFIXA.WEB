@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe, Location, PercentPipe } from '@angular/common';
-import { Component, inject, Input, PipeTransform, Signal } from '@angular/core';
+import { Component, inject, model, PipeTransform, Signal, Type } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgxMaskPipe } from 'ngx-mask';
 
@@ -10,14 +10,15 @@ import { NgxMaskPipe } from 'ngx-mask';
   styleUrl: './cartao-renda-fixa.scss'
 })
 export class CartaoRendaFixaComponent<T> {
-  @Input() dado!: T;
-  @Input() listaDePropriedade: { propriedade: keyof T | ((item: T) => string), titulo: string, pipe?: PipeTransform, caminho?: string }[] = [];
-  @Input() cssTabela = 'table table-striped table-bordered';
-  @Input() tituloCartao = '';
+  public dadoModel = model<T | null>(new Object() as T);
+  public listaDePropriedadeModel = model<{ propriedade: keyof T | ((item: T) => string), titulo: string, pipe?: PipeTransform, caminho?: string }[]>([]);
+  public cssTabelaModel = model('table table-striped table-bordered');
+  public tituloCartaoModel = model('');
 
   private location = inject(Location);
 
-  public obtemValor(item: T, propriedade: keyof T | ((item: T) => string), pipe?: PipeTransform): any {
+  public obtemValor(item: T | null, propriedade: keyof T | ((item: T) => string), pipe?: PipeTransform): any {
+    if (!item) return null;
     let valor: any;
     if (typeof propriedade === 'function') {
       valor = propriedade(item);
