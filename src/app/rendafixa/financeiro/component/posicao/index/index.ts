@@ -4,11 +4,11 @@ import { Posicao } from '../../../model/posicao';
 import { Subject, takeUntil } from 'rxjs';
 import { ConsultaPosicao } from '../../../service/consulta-posicao';
 import { ListaCincoUltimasPosicoesSignature } from '../../../service/signature/lista-cinco-ultimas-posicoes-signature';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-index',
-  imports: [Lista],
+  imports: [Lista, RouterLink],
   templateUrl: './index.html',
   styleUrl: './index.scss'
 })

@@ -1,1 +1,7 @@
-<app-lista [listaDePosicao]="listaDePosicao"></app-lista>
+<div class="col-12">
+    <app-lista [listaDePosicao]="listaDePosicao"></app-lista>
+</div>
+<div class="d-flex justify-content-between">
+    <a type="button" class="btn btn-outline-primary" [routerLink]="['/home']">Ir para Home</a>
+    <a type="button" class="btn btn-outline-success" [routerLink]="['/investimento']">Volta</a>
+</div>
