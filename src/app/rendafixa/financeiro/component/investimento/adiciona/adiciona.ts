@@ -38,10 +38,12 @@ export class Adiciona implements OnInit, OnDestroy {
   }
 
   public adicionaInvestimento() {
-    this.investimentoModel().boCarregandoInvestimento = true;
-    this.investimentoModel().enumIndexador = this.enumIndexadorDescricao.id;
-    
-    this.manipulaInvestimento.adicionaInvestimento(this.investimentoModel().converteEmSignatureAdicionaInvestimento())
+    this.investimentoModel.update(x => {
+      x.enumIndexador = this.enumIndexadorDescricao.id;
+      x.boCarregandoInvestimento = true; return x;
+    });
+
+    this.manipulaInvestimento.adicionaInvestimento(this.investimentoModel())
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
@@ -49,11 +51,11 @@ export class Adiciona implements OnInit, OnDestroy {
             this.router.navigate(['/investimento']);
             return;
           }
-          this.investimentoModel().boCarregandoInvestimento = false;
+          this.investimentoModel.update(x => { x.boCarregandoInvestimento = false; return x; });
         },
         error: (err) => {
           console.log(err);
-          this.investimentoModel().boCarregandoInvestimento = false;
+          this.investimentoModel.update(x => { x.boCarregandoInvestimento = false; return x; });
         }
       });
   }

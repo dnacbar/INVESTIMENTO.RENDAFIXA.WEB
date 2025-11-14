@@ -39,7 +39,7 @@ export class Adiciona {
           }
           this.investimentoModel.set(new Investimento());
 
-          this.consultaInvestimento.listaInvestimentoComResgateDisponivel(x.converteEmListaInvestimentoComResgateDisponivelSignature())
+          this.consultaInvestimento.listaInvestimentoComResgateDisponivel(x)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: result => { this.listaDeInvestimentoModel.set(result); },
@@ -59,7 +59,7 @@ export class Adiciona {
     this.resgateModel().boCarregandoResgate = true;
     this.resgateModel().idInvestimento = this.investimentoModel().idInvestimento;
 
-    this.manipulaResgate.adicionaResgate(this.resgateModel().converteEmSignatureAdicionaResgate())
+    this.manipulaResgate.adicionaResgate(this.resgateModel())
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {

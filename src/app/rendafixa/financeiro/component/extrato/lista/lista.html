@@ -1,0 +1,27 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Valor Movimento</th>
+            <th>Valor Imposto</th>
+            <th>Data Movimento</th>
+            <th>Tipo Movimento</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (listaDeExtratoModel().length === 0) {
+        <tr>
+            <td [attr.colspan]="4" class="text-center">Nenhum registro para exibir.</td>
+        </tr>
+        }
+        @else {
+        @for(item of listaDeExtratoModel(); track $index) {
+        <tr>
+            <td>{{ item.nmValorMovimento }}</td>
+            <td>{{ item.nmValorImposto }}</td>
+            <td>{{ item.dtMovimento | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ item.txTipoMovimento }}</td>
+        </tr>
+        }
+        }
+    </tbody>
+</table>

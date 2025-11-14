@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
-        path: 'bloqueio-investimento',
+        path: 'bloqueio-juridico',
         children: [
             {
                 path: '',
@@ -41,7 +41,7 @@ export const routes: Routes = [
         ]
     },
     {
-        path: 'resgate',
+        path: 'extrato',
         children: [
             {
                 path: '',

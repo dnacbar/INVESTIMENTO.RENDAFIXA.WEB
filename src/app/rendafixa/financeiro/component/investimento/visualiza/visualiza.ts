@@ -1,4 +1,4 @@
-import { Component, inject, model, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { Investimento } from '../../../model/investimento';
 import { Location, CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
 import { NgxMaskPipe } from 'ngx-mask';
@@ -13,7 +13,7 @@ import { CartaoRendaFixaComponent } from '../../../../../library/component/carta
   imports: [CommonModule, CartaoRendaFixaComponent]
 })
 export class Visualiza implements OnInit {
-  public investimentoModel = model<Investimento | null>(null);
+  public investimentoInput = input<Investimento | null>(null);
 
   private location = inject(Location);
 

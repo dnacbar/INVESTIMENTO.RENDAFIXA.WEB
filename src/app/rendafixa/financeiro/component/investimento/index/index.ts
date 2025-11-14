@@ -1,72 +1,79 @@
 import { ConsultaInvestimento } from '../../../service/consulta-investimento';
-import { Component, OnDestroy, OnInit, effect, inject, model, signal } from '@angular/core';
-import { Lista } from '../lista/lista';
+import { Component, inject, signal, effect } from '@angular/core';
 import { Investimento } from '../../../model/investimento';
-import { Subject } from 'rxjs/internal/Subject';
-import { takeUntil } from 'rxjs/internal/operators/takeUntil';
 import { InvestidorDataBinding } from '../../../../investidor/service/investidor-data-binding';
 import { Router } from '@angular/router';
-import { Visualiza } from '../visualiza/visualiza';
 import { TabelaRendaFixaDataBinding } from '../../../../../library/service/tabela-renda-fixa-data-binding';
+import { Observable, switchMap, of, catchError, tap } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+
+import { Lista } from '../lista/lista';
+import { Visualiza } from '../visualiza/visualiza';
+import { Index as IndexExtrato } from "../../extrato/index";
 
 @Component({
   selector: 'app-index',
-  imports: [Lista, Visualiza],
+  imports: [Lista, Visualiza, IndexExtrato],
   templateUrl: './index.html',
   styleUrl: './index.scss'
 })
-export class Index implements OnInit, OnDestroy {
-  public listaDeInvestimentoSignal = signal<Investimento[]>([]);
-  public investimentoModel = model<Investimento | null>(null);
+export class Index {
+  public investimentoSignal = signal<Investimento | null>(null);
 
   private consultaInvestimento = inject(ConsultaInvestimento);
   private investidorDataBinding = inject(InvestidorDataBinding);
   private router = inject(Router);
+
   private tabelaRendaFixaDataBinding = inject(TabelaRendaFixaDataBinding<Investimento>);
 
-  private destroy$ = new Subject<void>();
+  public listaDeInvestimentoSignal = toSignal(
+    this.investidorDataBinding.investidorEmitter$.pipe(
+      // Ação lateral: Executa a habilitação do investidor no início do fluxo
+      tap(() => this.investidorDataBinding.enviaHabilitaSelecaoDeInvestidor(true)),
 
-  ngOnInit(): void {
-    this.investidorDataBinding.investidorEmitter$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: x => {
-          if (x.verificaSeEstaVazio()) {
-            this.investimentoModel.set(null);
-            this.listaDeInvestimentoSignal.set([]);
-            return;
-          }
+      // switchMap: Cancela a requisição anterior e inicia uma nova quando o investidor muda
+      switchMap(investidor => {
+        if (investidor.verificaSeEstaVazio()) {
+          // Se o investidor estiver vazio, retorna um Observable vazio
+          return of([]);
+        }
 
-          this.listaDeInvestimentoSignal.set([]);
+        // Caso contrário, consulta a lista de investimento
+        return this.consultaInvestimento.listaInvestimento(investidor).pipe(
+          // Tratamento de Erro na requisição (mantém o fluxo principal ativo)
+          catchError(err => {
+            console.error('Erro na consulta de investimento:', err);
+            return of([]);
+          })
+        );
+      })
+    ),
+    {
+      // Valor inicial
+      initialValue: [] as Investimento[]
+    }
+  );
 
-          this.consultaInvestimento.listaInvestimento(x.converteEmListaInvestimentoSignature())
-            .pipe(takeUntil(this.destroy$))
-            .subscribe({
-              next: result => {
-                this.listaDeInvestimentoSignal.set(result);
-                this.investimentoModel.set(this.listaDeInvestimentoSignal()[0]);
-              },
-              error: err => console.error('Erro na consulta de investimento: ' + err),
-            });
-        },
-        error: err => console.error('Erro ao selecionar o investidor: ' + err),
-      });
+  public investimentoSelecionadoExterno = toSignal(this.tabelaRendaFixaDataBinding.eventoEnviaItemSelecionado$ as Observable<Investimento>, { initialValue: null });
 
-    this.investidorDataBinding.enviaHabilitaSelecaoDeInvestidor(true);
+  constructor() {
+    effect(() => {
+      const lista = this.listaDeInvestimentoSignal();
 
-    this.tabelaRendaFixaDataBinding.eventoEnviaItemSelecionado$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: investimento => {
-          this.investimentoModel.set(investimento);
-        },
-        error: err => console.error('Erro ao receber o investimento selecionado: ' + err),
-      });
-  }
+      if (lista.length > 0 && this.investimentoSignal() === null) {
+        this.investimentoSignal.set(lista[0]);
+      } else if (lista.length === 0) {
+        this.investimentoSignal.set(null);
+      }
+    });
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    effect(() => {
+      const selecionado = this.investimentoSelecionadoExterno();
+      if (selecionado) {
+
+        this.investimentoSignal.set(selecionado);
+      }
+    });
   }
 
   public adicionaInvestimento(): void {
@@ -76,4 +83,5 @@ export class Index implements OnInit, OnDestroy {
   public irParaHome(): void {
     this.router.navigateByUrl('/home');
   }
+
 }

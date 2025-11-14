@@ -1,8 +1,4 @@
-import { ListaInvestimentoComResgateDisponivelSignature } from './../../financeiro/service/signature/lista-investimento-com-resgate-disponivel-signature';
-import { ListaInvestimentoSignature } from "../../financeiro/service/signature/lista-investimento-signature";
-import { ListaResgateDoInvestidorSignature } from "../../financeiro/service/signature/lista-resgate-do-investidor-signature";
 import { ListaClienteComInvestimentoAtivoResult } from "../service/result/lista-cliente-com-investimento-ativo-result";
-import { ListaBloqueioInvestimentoSignature } from '../../juridico/service/signature/lista-bloqueio-investimento-signature';
 
 export class Investidor {
     public idInvestidor = '';
@@ -12,34 +8,6 @@ export class Investidor {
         return this.idInvestidor === '' && this.documentoFederal === '';
     }
     
-    public converteEmListaBloqueioInvestimentoSignature(): ListaBloqueioInvestimentoSignature {
-        return {
-            investidor: this.idInvestidor,
-            docFederal: this.documentoFederal
-        } as ListaBloqueioInvestimentoSignature;
-    }
-
-    public converteEmListaInvestimentoSignature(): ListaInvestimentoSignature {
-        return {
-            investidor: this.idInvestidor,
-            docFederal: this.documentoFederal
-        } as ListaInvestimentoSignature;
-    }
-
-    public converteEmListaInvestimentoComResgateDisponivelSignature(): ListaInvestimentoComResgateDisponivelSignature {
-        return {
-            investidor: this.idInvestidor,
-            docFederal: this.documentoFederal
-        } as ListaInvestimentoComResgateDisponivelSignature;
-    }
-
-    public converteEmListaResgateDoInvestidorSignature(): ListaResgateDoInvestidorSignature{
-        return {
-            investidor: this.idInvestidor,
-            docFederal: this.documentoFederal
-        } as ListaResgateDoInvestidorSignature;
-    }
-
     public static converteEmInvestidor(result: ListaClienteComInvestimentoAtivoResult): Investidor {
         const investidor = new Investidor();
         if (!result)

@@ -9,10 +9,15 @@
             </div>
         </div>
         <div class="card-body">
-            <app-lista [listaDeInvestimentoModel]="listaDeInvestimentoSignal()"></app-lista>
-            <div class="my-4">
-                @if (investimentoModel() !== null) {
-                <app-visualiza [investimentoModel]="investimentoModel()"></app-visualiza>
+            <app-lista [listaDeInvestimentoInput]="listaDeInvestimentoSignal()"></app-lista>
+            <div class="my-3">
+                @if (investimentoSignal() !== null) {
+                <app-visualiza [investimentoInput]="investimentoSignal()"></app-visualiza>
+                }
+            </div>
+            <div class="my-3">
+                @if (investimentoSignal() !== null) {
+                <app-index-extrato [idInvestimentoInput]="investimentoSignal()?.idInvestimento ?? ''"></app-index-extrato>
                 }
             </div>
         </div>

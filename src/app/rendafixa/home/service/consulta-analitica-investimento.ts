@@ -10,11 +10,10 @@ import { environment } from '../../../../environments/environment';
 })
 export class ConsultaAnaliticaInvestimento {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public consultaSomaDeInvestimentoQueNaoEstaLiquidado(): Observable<TotalInvestimento> {
-    return this.http.post<TotalInvestimentoAnaliticoResult>(`${environment.urlBase}ConsultaAnaliticaInvestimento/ConsultaSomaDeInvestimento`, {}).pipe(
-      map(result => TotalInvestimento.converteTotalInvestimento(result))
-    );
+    return this.http.get<TotalInvestimentoAnaliticoResult>(`${environment.urlBase}ConsultaAnaliticaInvestimento/ConsultaSomaDeInvestimento`, {})
+      .pipe(map(result => TotalInvestimento.converteTotalInvestimento(result)));
   }
 }

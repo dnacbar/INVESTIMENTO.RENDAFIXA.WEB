@@ -1,16 +1,16 @@
-<h5 class="my-2">Detalhe</h5>
+<h5 class="my-3">Detalhe</h5>
 
-@if(dadoModel() !== null) {
+@if(dadoInput() !== null) {
 <dl class="row">
-    @for (item of listaDePropriedadeModel(); track $index) {
+    @for (item of listaDePropriedadeInput(); track $index) {
     <dt class="col-6">{{item.titulo}}</dt>
     @if(item.caminho) {
     <dd class="col-6"><a [routerLink]="[item.caminho]"
-            [state]="{investimento: obtemValor(dadoModel(), item.propriedade, item.pipe)}">{{
-            obtemValor(dadoModel(), item.propriedade, item.pipe) }}</a>
+            [state]="{investimento: obtemValor(dadoInput(), item.propriedade, item.pipe)}">{{
+            obtemValor(dadoInput(), item.propriedade, item.pipe) }}</a>
     </dd>
     } @else {
-    <dd class="col-6">{{ obtemValor(dadoModel(), item.propriedade, item.pipe) }}</dd>
+    <dd class="col-6">{{ obtemValor(dadoInput(), item.propriedade, item.pipe) }}</dd>
     }
     }
 </dl>

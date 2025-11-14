@@ -1,8 +1,7 @@
 import { CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
-import { Component, inject, model, PipeTransform, signal, WritableSignal } from '@angular/core';
+import { Component, inject, input, PipeTransform, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskPipe } from 'ngx-mask';
-import { Subject } from 'rxjs';
 import { TabelaRendaFixaDataBinding } from '../../service/tabela-renda-fixa-data-binding';
 
 @Component({
@@ -12,17 +11,18 @@ import { TabelaRendaFixaDataBinding } from '../../service/tabela-renda-fixa-data
   styleUrl: './tabela-renda-fixa.scss'
 })
 export class TabelaRendaFixaComponent<T> {
-  public listaDeDadoModel = model<T[]>([]);
-  public listaDeColunaModel = model<{ campo: keyof T | ((item: T) => any), titulo: string, pipe?: PipeTransform }[]>([]);
-  public cssTabelaModel = model('table table-hover');
-  public habilitaColunaAcaoModel = model(true);
-  public quantidadePorPagina = model(10);
-  public paginaAtual = model(1);
+  public listaDeDadoInput = input<T[]>([]);
+  public listaDeColunaInput = input<{ campo: keyof T | ((item: T) => any), titulo: string, pipe?: PipeTransform }[]>([]);
+  public cssTabelaInput = input('table table-hover');
+  public habilitaColunaAcaoInput = input(true);
+
+  public quantidadePorPaginaSignal = signal(10);
+  public paginaAtualSignal = signal(1);
 
   public tabelaRendaFixaDataBinding = inject(TabelaRendaFixaDataBinding<T>);
 
   get totalPaginas() {
-    return Math.ceil(this.listaDeDadoModel().length / this.quantidadePorPagina());
+    return Math.ceil(this.listaDeDadoInput().length / this.quantidadePorPaginaSignal());
   }
 
   get paginas() {
@@ -30,8 +30,8 @@ export class TabelaRendaFixaComponent<T> {
   }
 
   get dadosPaginados() {
-    const inicio = (this.paginaAtual() - 1) * this.quantidadePorPagina();
-    return this.listaDeDadoModel().slice(inicio, inicio + this.quantidadePorPagina());
+    const inicio = (this.paginaAtualSignal() - 1) * this.quantidadePorPaginaSignal();
+    return this.listaDeDadoInput().slice(inicio, inicio + this.quantidadePorPaginaSignal());
   }
 
   public obtemValor(item: T, campo: keyof T | ((item: T) => any), pipe?: PipeTransform): any {
@@ -51,14 +51,14 @@ export class TabelaRendaFixaComponent<T> {
             pipe.transform(valor);
   }
 
-  public irParaPrimeira() { this.paginaAtual.set(1); }
-  public irParaUltima() { this.paginaAtual.set(this.totalPaginas); }
-  public irParaAnterior() { if (this.paginaAtual() > 1) this.paginaAtual.set(this.paginaAtual() - 1); }
-  public irParaProxima() { if (this.paginaAtual() < this.totalPaginas) this.paginaAtual.set(this.paginaAtual() + 1); }
-  public irParaPagina(p: number) { this.paginaAtual.set(p); }
+  public irParaPrimeira() { this.paginaAtualSignal.set(1); }
+  public irParaUltima() { this.paginaAtualSignal.set(this.totalPaginas); }
+  public irParaAnterior() { if (this.paginaAtualSignal() > 1) this.paginaAtualSignal.set(this.paginaAtualSignal() - 1); }
+  public irParaProxima() { if (this.paginaAtualSignal() < this.totalPaginas) this.paginaAtualSignal.set(this.paginaAtualSignal() + 1); }
+  public irParaPagina(p: number) { this.paginaAtualSignal.set(p); }
 
   public aoMudarQuantidade(quantidade: number) {
-    this.quantidadePorPagina.set(quantidade);
-    this.paginaAtual.set(1);
+    this.quantidadePorPaginaSignal.set(quantidade);
+    this.paginaAtualSignal.set(1);
   }
 }

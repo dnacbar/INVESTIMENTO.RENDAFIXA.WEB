@@ -1,3 +1,3 @@
 export const environment = {
-    urlBase: 'http://localhost/INVESTIMENTO.RENDAFIXA.WEBSERVICE/'
+    urlBase: 'http://localhost:8888/'
 };

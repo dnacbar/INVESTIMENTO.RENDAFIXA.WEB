@@ -41,7 +41,7 @@ export class Adiciona {
           }
           this.investimentoModel.set(new Investimento());
 
-          this.consultaInvestimento.listaInvestimento(x.converteEmListaInvestimentoSignature())
+          this.consultaInvestimento.listaInvestimento(x)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: result => { this.listaDeInvestimentoModel.set(result); },
@@ -61,7 +61,7 @@ export class Adiciona {
     this.bloqueioInvestimentoModel().boCarrengandoBloqueioInvestimento = true;
     this.bloqueioInvestimentoModel().idInvestimento = this.investimentoModel().idInvestimento;
 
-    this.manipulaBloqueio.adicionaBloqueioInvestimento(this.bloqueioInvestimentoModel().converteEmAdicionaBloqueioInvestimentoSignature())
+    this.manipulaBloqueio.adicionaBloqueioInvestimento(this.bloqueioInvestimentoModel())
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {

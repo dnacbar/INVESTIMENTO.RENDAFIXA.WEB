@@ -1,10 +1,10 @@
-<app-cartao-renda-fixa [listaDePropriedadeModel]="[
-  {titulo:'Investimento', propriedade:'idInvestimento', caminho:'/posicao'},
+<app-cartao-renda-fixa [listaDePropriedadeInput]="[
+  {titulo:'Investimento', propriedade:'idInvestimento'},
   {titulo:'Documento Federal', propriedade:'txDocumentoFederal', pipe:ngxMaskPipe},
   {titulo:'Valor Inicial', propriedade:'nmValorInicial', pipe:currencyPipe},
   {titulo:'Valor Final', propriedade:'nmValorFinal', pipe:currencyPipe},
-  {titulo:'Valor Bloqueado Total', propriedade:'nmValorBloqueadoTotal', pipe:currencyPipe},
   {titulo:'Valor Imposto', propriedade:'nmValorImposto', pipe:currencyPipe},
+  {titulo:'Valor Bloqueado Total', propriedade:'nmValorBloqueadoTotal', pipe:currencyPipe},
   {titulo:'Taxa Rendimento', propriedade:'nmTaxaRendimento', pipe:percentPipe},
   {titulo:'Taxa Adicional', propriedade:'nmTaxaAdicional', pipe:percentPipe},
   {titulo:'Data Inicial', propriedade:'dtInicial', pipe:datePipe},
@@ -14,4 +14,4 @@
   {titulo:'Liquidez Diária', propriedade:exibeLiquidezDiaria},
   {titulo:'Indexador', propriedade:exibeIndexador},
   {titulo:'Liquidado', propriedade:exibeLiquidado},
-]" [dadoModel]="investimentoModel()" [tituloCartaoModel]="'investimento'"></app-cartao-renda-fixa>
+]" [dadoInput]="investimentoInput()" [tituloCartaoInput]="'investimento'"></app-cartao-renda-fixa>

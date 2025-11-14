@@ -1,5 +1,4 @@
 import { ListaResgateDoInvestidorResult } from "../service/result/lista-resgate-do-investidor-result";
-import { AdicionaResgateSignature } from "../service/signature/adiciona-resgate-signature";
 
 export class Resgate {
     public idInvestimento = '';
@@ -12,14 +11,6 @@ export class Resgate {
     public nmValorAnterior = 0;
     public dtResgate = new Date();
     public boCarregandoResgate = false;
-
-    public converteEmSignatureAdicionaResgate(): AdicionaResgateSignature {
-        return {
-            investimento: this.idInvestimento,
-            valor: this.nmValorResgate,
-            usuario: 'WEBSERVICE'
-        };
-    }
 
     public static converteResgate(result: ListaResgateDoInvestidorResult): Resgate {
         const retorno = new Resgate();
@@ -35,7 +26,7 @@ export class Resgate {
         retorno.nmValorImposto = result?.valorImposto;
         retorno.nmValorIof = result?.valorIof;
         retorno.nmValorIrrf = result?.valorIrrf;
-        retorno.dtResgate = new Date(result.dtResgate);;
+        retorno.dtResgate = new Date(result?.dtResgate);
 
         return retorno;
     }

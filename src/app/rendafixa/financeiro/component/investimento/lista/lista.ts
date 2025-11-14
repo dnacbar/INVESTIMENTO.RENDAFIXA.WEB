@@ -1,6 +1,6 @@
 import { CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
 import { Investimento } from '../../../model/investimento';
-import { Component, effect, model, signal } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { NgxMaskPipe } from 'ngx-mask';
 import { Router } from '@angular/router';
 import { TabelaRendaFixaComponent } from '../../../../../library/component/tabela-renda-fixa/tabela-renda-fixa';
@@ -13,13 +13,10 @@ import { TabelaRendaFixaComponent } from '../../../../../library/component/tabel
   styleUrl: './lista.scss'
 })
 export class Lista {
-  public listaDeInvestimentoModel = model<Investimento[]>([]);
-  public investimentoModel = model<any | null>(null);
+  public listaDeInvestimentoInput = input<Investimento[]>([]);
+  public investimentoInput = input<any | null>(null);
 
   constructor(public ngxMaskPipe: NgxMaskPipe, public datePipe: DatePipe, public currencyPipe: CurrencyPipe, public percentPipe: PercentPipe, private router: Router) {
-    effect(() => {
-      this.investimentoModel.set(this.investimentoModel());
-    });
   }
 
   public adicionaInvestimento(): void {

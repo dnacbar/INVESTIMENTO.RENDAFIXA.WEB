@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { ListaCincoUltimasPosicoesResult } from './result/lista-cinco-ultimas-posicoes-result';
+import { ListaUltimasPosicoesResult as ListaUltimasPosicoesResult } from './result/lista-ultimas-posicoes-result';
 import { Posicao } from '../model/posicao';
-import { ListaCincoUltimasPosicoesSignature } from './signature/lista-cinco-ultimas-posicoes-signature';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -12,8 +11,8 @@ import { environment } from '../../../../environments/environment';
 export class ConsultaPosicao {
   private httpClient = inject(HttpClient);
 
-  public listaCincoUltimasPosicoes(signature: ListaCincoUltimasPosicoesSignature): Observable<Posicao[]> {
-    return this.httpClient.post<ListaCincoUltimasPosicoesResult[]>(environment.urlBase + 'ConsultaPosicao/ListaCincoUltimasPosicoes', signature)
-      .pipe(map((x: ListaCincoUltimasPosicoesResult[]) => x.map(result => Posicao.convertePosicao(result))));
+  public listaCincoUltimasPosicoes(investimento: string): Observable<Posicao[]> {
+    return this.httpClient.get<ListaUltimasPosicoesResult[]>(environment.urlBase + 'ConsultaPosicao/ListaCincoUltimasPosicoes', { params: { investimento } })
+      .pipe(map((x: ListaUltimasPosicoesResult[]) => x.map(result => Posicao.convertePosicao(result))));
   }
 }

@@ -3,7 +3,6 @@ import { Lista } from '../lista/lista';
 import { Posicao } from '../../../model/posicao';
 import { Subject, takeUntil } from 'rxjs';
 import { ConsultaPosicao } from '../../../service/consulta-posicao';
-import { ListaCincoUltimasPosicoesSignature } from '../../../service/signature/lista-cinco-ultimas-posicoes-signature';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
@@ -33,7 +32,7 @@ export class Index implements OnInit, OnDestroy {
       return;
     }
 
-    this.consultaPosicao.listaCincoUltimasPosicoes({ investimento: idInvestimento } as ListaCincoUltimasPosicoesSignature)
+    this.consultaPosicao.listaCincoUltimasPosicoes(idInvestimento)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: x => {

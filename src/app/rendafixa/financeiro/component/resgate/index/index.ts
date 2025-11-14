@@ -32,7 +32,7 @@ export class Index implements OnInit, OnDestroy {
             return;
           }
 
-          this.consultaResgate.listaResgateDoInvestidor(x.converteEmListaResgateDoInvestidorSignature())
+          this.consultaResgate.listaResgateDoInvestidor(x)
             .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: result => {

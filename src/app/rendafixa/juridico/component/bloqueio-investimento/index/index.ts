@@ -1,10 +1,11 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, model, OnDestroy, OnInit, signal } from '@angular/core';
 import { BloqueioInvestimento } from '../../../model/bloqueio-investimento';
 import { InvestidorDataBinding } from '../../../../investidor/service/investidor-data-binding';
 import { Router } from '@angular/router';
 import { ConsultaBloqueioInvestimento } from '../../../service/consulta-bloqueio-investimento';
-import { Subject, takeUntil } from 'rxjs';
+import { catchError, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { Lista } from "../lista/lista";
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-index',
@@ -13,44 +14,27 @@ import { Lista } from "../lista/lista";
   styleUrl: './index.scss'
 })
 export class Index {
- public listaDeBloqueioInvestimentoModel = model<BloqueioInvestimento[]>([]);
-
   private consultaBloqueioInvestimento = inject(ConsultaBloqueioInvestimento);
   private investidorDataBinding = inject(InvestidorDataBinding);
   private router = inject(Router);
 
-  private destroy$ = new Subject<void>();
-
-  ngOnInit(): void {
-
+  public listaDeBloqueioInvestimentoSignal = toSignal(
     this.investidorDataBinding.investidorEmitter$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: x => {
+      .pipe(
+        switchMap(x => {
           if (x.verificaSeEstaVazio()) {
-            this.listaDeBloqueioInvestimentoModel.set([]);
-            return;
+            return of([]);
           }
- 
-          this.consultaBloqueioInvestimento.listaBloqueioInvestimento(x.converteEmListaBloqueioInvestimentoSignature())
-            .pipe(takeUntil(this.destroy$))
-            .subscribe({
-              next: result => {
-                this.listaDeBloqueioInvestimentoModel.set(result);
-              },
-              error: err => console.error('Erro na consulta de resgate: ' + err),
-            });
-        },
-        error: err => console.error('Erro ao selecionar o investidor: ' + err),
-      });
-
-    this.investidorDataBinding.enviaHabilitaSelecaoDeInvestidor(true);
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+          return this.consultaBloqueioInvestimento.listaBloqueioInvestimento(x)
+            .pipe(
+              catchError(err => {
+                console.error('Erro na consulta de bloqueio de investimento:', err);
+                return of([]);
+              })
+            );
+        }),
+        tap(() => this.investidorDataBinding.enviaHabilitaSelecaoDeInvestidor(true))),
+    { initialValue: [] as BloqueioInvestimento[] });
 
   public irParaHome(): void {
     this.router.navigateByUrl('/home');

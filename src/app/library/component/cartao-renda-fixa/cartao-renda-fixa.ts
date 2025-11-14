@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe, Location, PercentPipe } from '@angular/common';
-import { Component, inject, model, PipeTransform, Signal, Type } from '@angular/core';
+import { Component, inject, input, PipeTransform } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { NgxMaskPipe } from 'ngx-mask';
 
@@ -10,10 +10,10 @@ import { NgxMaskPipe } from 'ngx-mask';
   styleUrl: './cartao-renda-fixa.scss'
 })
 export class CartaoRendaFixaComponent<T> {
-  public dadoModel = model<T | null>(new Object() as T);
-  public listaDePropriedadeModel = model<{ propriedade: keyof T | ((item: T) => string), titulo: string, pipe?: PipeTransform, caminho?: string }[]>([]);
-  public cssTabelaModel = model('table table-striped table-bordered');
-  public tituloCartaoModel = model('');
+  public dadoInput = input<T | null>(new Object() as T);
+  public listaDePropriedadeInput = input<{ propriedade: keyof T | ((item: T) => string), titulo: string, pipe?: PipeTransform, caminho?: string }[]>([]);
+  public cssTabelaInput = input('table table-striped table-bordered');
+  public tituloCartaoInput = input('');
 
   private location = inject(Location);
 

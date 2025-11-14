@@ -1,12 +1,11 @@
+import { Investidor } from './../../investidor/model/investidor';
 import { ListaInvestimentoComResgateDisponivelResult } from './result/lista-investimento-com-resgate-disponivel-result';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ListaInvestimentoSignature } from './signature/lista-investimento-signature';
 import { map, Observable } from 'rxjs';
 import { ListaInvestimentoResult } from './result/lista-investimento-result';
 import { Investimento } from '../model/investimento';
 import { environment } from '../../../../environments/environment';
-import { ListaInvestimentoComResgateDisponivelSignature } from './signature/lista-investimento-com-resgate-disponivel-signature';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +13,22 @@ import { ListaInvestimentoComResgateDisponivelSignature } from './signature/list
 export class ConsultaInvestimento {
   private httpClient = inject(HttpClient);
 
-  public listaInvestimento(signature: ListaInvestimentoSignature): Observable<Investimento[]> {
-    return this.httpClient.post<ListaInvestimentoResult[]>(`${environment.urlBase}ConsultaInvestimento/Lista`, signature)
-    .pipe(map(x => x.map(result => Investimento.converteInvestimento(result))));
+  public listaInvestimento(investidor: Investidor): Observable<Investimento[]> {
+    return this.httpClient.get<ListaInvestimentoResult[]>(`${environment.urlBase}ConsultaInvestimento/Lista`, {
+      params:
+      {
+        investidor: investidor.idInvestidor,
+        docFederal: investidor.documentoFederal
+      }
+    }).pipe(map(x => x.map(result => Investimento.converteInvestimento(result))));
   }
 
-  public listaInvestimentoComResgateDisponivel(signature: ListaInvestimentoComResgateDisponivelSignature): Observable<Investimento[]> {
-    return this.httpClient.post<ListaInvestimentoComResgateDisponivelResult[]>(`${environment.urlBase}ConsultaInvestimento/ListaInvestimentoComResgateDisponivel`, signature)
-    .pipe(map(x => x.map(result => Investimento.converteInvestimentoComResgateDisponivel(result))));
+  public listaInvestimentoComResgateDisponivel(investidor: Investidor): Observable<Investimento[]> {
+    return this.httpClient.get<ListaInvestimentoComResgateDisponivelResult[]>(`${environment.urlBase}ConsultaInvestimento/ListaInvestimentoComResgateDisponivel`, {
+      params: {
+        investidor: investidor.idInvestidor,
+        docFederal: investidor.documentoFederal
+      }
+    }).pipe(map(x => x.map(result => Investimento.converteInvestimentoComResgateDisponivel(result))));
   }
 }

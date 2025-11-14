@@ -1,4 +1,4 @@
-import { ListaCincoUltimasPosicoesResult } from "../service/result/lista-cinco-ultimas-posicoes-result";
+import { ListaUltimasPosicoesResult } from "../service/result/lista-ultimas-posicoes-result";
 import { PosicaoImposto } from "./posicao-imposto";
 
 export class Posicao {
@@ -14,7 +14,7 @@ export class Posicao {
 
     public listaDeImposto: PosicaoImposto[] = [];
 
-    public static convertePosicao(result: ListaCincoUltimasPosicoesResult): Posicao {
+    public static convertePosicao(result: ListaUltimasPosicoesResult): Posicao {
         const posicao = new Posicao();
 
         if (!result)

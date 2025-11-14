@@ -11,9 +11,8 @@ import { environment } from '../../../../environments/environment';
 export class ConsultaInvestidor {
   private httpClient = inject(HttpClient);
 
-  public listaInvestidor() : Observable<Investidor[]> {
-    return this.httpClient.post<ListaClienteComInvestimentoAtivoResult[]>(`${environment.urlBase}ConsultaInvestidor/Lista`, {})
-      .pipe(map(result => result.map(item => Investidor.converteEmInvestidor(item)))
-      );
+  public listaInvestidor(): Observable<Investidor[]> {
+    return this.httpClient.get<ListaClienteComInvestimentoAtivoResult[]>(`${environment.urlBase}ConsultaInvestidor/Lista`)
+      .pipe(map(result => result.map(item => Investidor.converteEmInvestidor(item))));
   }
 }

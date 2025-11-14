@@ -1,4 +1,3 @@
-import { AdicionaInvestimentoSignature } from '../service/signature/adiciona-investimento-signature';
 import { ListaInvestimentoResult } from '../service/result/lista-investimento-result';
 import { EnumIndexador } from './enum/enum-indexador';
 import { DataExtension } from '../../../library/extension/data-extension';
@@ -60,23 +59,6 @@ export class Investimento {
 
     public verificaSeDataInicialEhMaiorOuIgualQueDataAtual() {
         return DataExtension.verificaSeDataEhMaiorOuIgualOutraData(this.dtInicial, new Date());
-    }
-
-    public converteEmSignatureAdicionaInvestimento(): AdicionaInvestimentoSignature {
-        return {
-            investidor: this.idInvestidor,
-            docFederal: this.txDocumentoFederal || null,
-            vlInicial: this.nmValorInicial,
-            diasCarencia: this.nmDiasCarencia,
-            txRendimento: this.nmTaxaRendimento,
-            txAdicional: this.nmTaxaAdicional,
-            dtInicial: this.dtInicial instanceof Date ? this.dtInicial.toISOString().substring(0, 10) : String(this.dtInicial),
-            dtFinal: this.dtFinal instanceof Date ? this.dtFinal.toISOString().substring(0, 10) : String(this.dtFinal),
-            indexador: this.enumIndexador,
-            isentoImposto: this.boIsentoImposto,
-            liquidezDiaria: this.boLiquidezDiaria,
-            usuario: 'DN'
-        };
     }
 
     public static converteInvestimento(result: ListaInvestimentoResult): Investimento {
